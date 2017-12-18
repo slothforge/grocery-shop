@@ -15,6 +15,11 @@ DROP TABLE IF EXISTS customer;
 
 DROP TABLE IF EXISTS supply;
 
+-- Product to Group table
+
+DROP INDEX IF EXISTS i_product_to_group__product_group_id;
+DROP TABLE IF EXISTS product_to_group;
+
 -- Product table
 
 DROP TABLE IF EXISTS product;

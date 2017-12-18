@@ -1,8 +1,8 @@
 package net.slothforge.groceryshop.entity
 
-internal data class Product(
-        private val id: Long,
-        private val name: String,
-        private val group: ProductGroup,
-        private val price: Float
+data class Product(
+        val id: Long,
+        val name: String,
+        val unit: String,
+        val price: Float
 )

@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/grocery-shop-1.0.jar --spring.config.location=classpath:/local.properties
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/grocery-shop-1.0.jar --spring.config.location=classpath:/prod.properties

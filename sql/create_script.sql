@@ -11,10 +11,20 @@ CREATE TABLE product_group (
 CREATE TABLE product (
   id             BIGSERIAL NOT NULL PRIMARY KEY,
   name           TEXT      NOT NULL,
-  group_id       BIGINT    NOT NULL REFERENCES product_group (id),
   unit           TEXT      NOT NULL,
   price_per_unit REAL      NOT NULL
 );
+
+-- Product to Group table
+
+CREATE TABLE product_to_group (
+  product_id       BIGSERIAL NOT NULL REFERENCES product (id),
+  product_group_id BIGSERIAL NOT NULL REFERENCES product_group (id),
+  CONSTRAINT product_to_group_pk PRIMARY KEY (product_id, product_group_id)
+);
+
+CREATE INDEX i_product_to_group__product_group_id
+  ON product_to_group (product_group_id);
 
 -- Supply table
 

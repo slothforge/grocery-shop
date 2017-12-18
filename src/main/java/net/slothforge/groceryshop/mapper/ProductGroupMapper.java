@@ -1,33 +1,32 @@
 package net.slothforge.groceryshop.mapper;
 
 import net.slothforge.groceryshop.entity.ProductGroup;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * Mapper written on Kotlin for some reason idea do not support language injection for string concatenation
- * So sql code looks really ugly, therefore I decided to use Java for mappers instead.
+ * For some reason IDEA do not support language injection on string concatenation for mappers written on Kotlin
+ * So sql code inside Kotlin mappers looks really ugly, therefore I've decided to use Java mappers instead.
  */
 
 @Mapper
 public interface ProductGroupMapper {
 
-    String SELECT_PRODUCT_GROUP = "SELECT pg.id, pg.name, pg.description FROM product_group pg ";
-
-    @Select(SELECT_PRODUCT_GROUP + ";")
-    List<ProductGroup> listAll();
+    String RETURN_PRODUCT_GROUP = "RETURNING id, name, description";
 
     //language=SQL
-    @Select(SELECT_PRODUCT_GROUP +
-            "WHERE pg.id = #{id};")
-    ProductGroup findById(@Param("id") long id);
+    @Select("SELECT pg.id, pg.name, pg.description FROM product_group pg;")
+    List<ProductGroup> listAll();
 
     //language=SQL
     @Select("INSERT INTO product_group (name, description) " +
             "VALUES (#{name}, #{description}) " +
-            "RETURNING id, name, description;")
+            RETURN_PRODUCT_GROUP + ";")
     ProductGroup insert(@Param("name") @NotNull String name,
                         @Param("description") @NotNull String description);
 
@@ -35,8 +34,8 @@ public interface ProductGroupMapper {
     @Select("UPDATE product_group " +
             "SET name = #{name}, description = #{description} " +
             "WHERE id = #{id} " +
-            "RETURNING id, name, description;")
-    ProductGroup update(@Param("id") @NotNull long id,
+            RETURN_PRODUCT_GROUP + ";")
+    ProductGroup update(@Param("id") long id,
                         @Param("name") @NotNull String name,
                         @Param("description") @NotNull String description);
 
