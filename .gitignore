@@ -4,11 +4,6 @@
 .idea/
 *.iml
 
-# gradle wrapper
-gradle/
-gradlew
-gradlew.bat
-
 # gradle build output
 .gradle/
 build/
