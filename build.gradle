@@ -2,6 +2,7 @@ buildscript {
     ext.java_version = '1.8'
     ext.kotlin_version = '1.2.10'
     ext.spring_boot_version = '1.5.9.RELEASE'
+    ext.junit_version = '5.0.2'
 
     repositories {
         mavenCentral()
@@ -23,6 +24,7 @@ sourceCompatibility = "$java_version"
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -43,6 +45,18 @@ dependencies {
 
     // utils
     compile 'joda-time:joda-time:2.9.9'
+    compile 'org.apache.commons:commons-lang3:3.7'
+
+    // tests
+    testCompile "org.springframework.boot:spring-boot-starter-test:$spring_boot_version"
+    testCompile 'com.github.sbrannen:spring-test-junit5:1.0.2'
+
+    testCompile "org.junit.jupiter:junit-jupiter-api:$junit_version"
+    testCompile "org.junit.jupiter:junit-jupiter-params:$junit_version"
+    testRuntime "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+
+    testCompile 'org.mockito:mockito-all:1.10.19'
+    testCompile 'org.assertj:assertj-core:3.8.0'
 }
 
 
