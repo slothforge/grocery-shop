@@ -21,11 +21,12 @@ class ProductService {
     @Autowired
     private lateinit var productToGroupMapper: ProductToGroupMapper
 
-    fun listAll(): List<Product> {
-        return productMapper.listAll().toList()
+    fun listAll(offset: Int = 0, limit: Int = 0): List<Product> {
+        return if (offset == 0 && limit == 0) productMapper.listAll().toList()
+        else productMapper.listWithOffsetAndLimit(offset, limit).toList()
     }
 
-    fun listAllFullDto(): List<ProductDtoFull> {
+    fun listAllFullDto(offset: Int = 0, limit: Int = 0): List<ProductDtoFull> {
 
         val groupIdToGroupMap: Map<Long, ProductGroup> = productGroupMapper.listAll()
                 .map { it.id to it }.toMap()
@@ -37,7 +38,7 @@ class ProductService {
             productIdToGroupIdListMap[productToGroup.productId]!!.add(productToGroup.productGroupId)
         }
 
-        return listAll()
+        return listAll(offset, limit)
                 .map { product ->
                     run {
                         val productGroupSet: Set<ProductGroup> = productIdToGroupIdListMap.getOrDefault(product.id, mutableListOf())
@@ -45,8 +46,7 @@ class ProductService {
 
                         ProductDtoFull(product.name, product.unit, product.price, productGroupSet)
                     }
-                }
-                .toList()
+                }.toList()
     }
 
     fun add(dtoUpdate: ProductDtoUpdate): Product? {

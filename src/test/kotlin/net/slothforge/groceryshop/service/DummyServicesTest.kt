@@ -46,6 +46,6 @@ class DummyServicesTest {
         productService.listAll()
         productService.delete(inserted.id)
 
-        println(productService.listAllFullDto())
+        println(productService.listAllFullDto(2, 1))
     }
 }

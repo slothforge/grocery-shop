@@ -18,11 +18,17 @@ import java.util.List;
 @Mapper
 public interface ProductMapper {
 
+    String SELECT_PRODUCT = "SELECT pr.id, pr.name, pr.unit rawUnit, pr.price_per_unit price FROM product pr ";
     String RETURN_PRODUCT = "RETURNING id, name, unit, price_per_unit";
 
     //language=SQL
-    @Select("SELECT pr.id, pr.name, pr.unit rawUnit, pr.price_per_unit price FROM product pr ;")
+    @Select(SELECT_PRODUCT + ";")
     List<Product> listAll();
+
+    //language=SQL
+    @Select(SELECT_PRODUCT + "OFFSET #{offset} LIMIT #{limit};")
+    List<Product> listWithOffsetAndLimit(@Param("offset") int offset,
+                                         @Param("limit") int limit);
 
     //language=SQL
     @Select("INSERT INTO product (name, unit, price_per_unit) " +
