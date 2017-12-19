@@ -45,5 +45,7 @@ class DummyServicesTest {
         productService.update(inserted!!.id, dtoUpdate)
         productService.listAll()
         productService.delete(inserted.id)
+
+        println(productService.listAllFullDto())
     }
 }

@@ -21,7 +21,7 @@ public interface ProductMapper {
     String RETURN_PRODUCT = "RETURNING id, name, unit, price_per_unit";
 
     //language=SQL
-    @Select("SELECT pr.id, pr.name, pr.unit, pr.price_per_unit price FROM product pr ;")
+    @Select("SELECT pr.id, pr.name, pr.unit rawUnit, pr.price_per_unit price FROM product pr ;")
     List<Product> listAll();
 
     //language=SQL
