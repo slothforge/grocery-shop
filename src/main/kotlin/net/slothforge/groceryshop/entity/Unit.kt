@@ -1,5 +1,5 @@
 package net.slothforge.groceryshop.entity
 
 enum class Unit {
-    ONE, KG, GR
+    ONE, KG, GR, LITER
 }

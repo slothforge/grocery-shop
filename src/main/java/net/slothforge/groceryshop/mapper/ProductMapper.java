@@ -6,29 +6,32 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * For some reason IDEA do not support language injection on string concatenation for mappers written on Kotlin
+ * For some reason IDEA does not support language injection for string concatenation in Kotlin classes
  * So sql code inside Kotlin mappers looks really ugly, therefore I've decided to use Java mappers instead.
  */
 
 @Mapper
+@Repository
 public interface ProductMapper {
 
+    //language=SQL
     String SELECT_PRODUCT = "SELECT pr.id, pr.name, pr.unit rawUnit, pr.price_per_unit price FROM product pr ";
     String RETURN_PRODUCT = "RETURNING id, name, unit, price_per_unit";
 
     //language=SQL
-    @Select(SELECT_PRODUCT + ";")
+    @Select(SELECT_PRODUCT)
     List<Product> listAll();
 
     //language=SQL
-    @Select(SELECT_PRODUCT + "OFFSET #{offset} LIMIT #{limit};")
-    List<Product> listWithOffsetAndLimit(@Param("offset") int offset,
-                                         @Param("limit") int limit);
+    @Select(SELECT_PRODUCT + "LIMIT #{limit} OFFSET #{offset};")
+    List<Product> listForLimitAndOffset(@Param("limit") int limit,
+                                        @Param("offset") int offset);
 
     //language=SQL
     @Select("INSERT INTO product (name, unit, price_per_unit) " +
