@@ -56,11 +56,11 @@ class ProductService {
         return ProductDtoFull(update, productGroupSetByProductId)
     }
 
-    fun delete(id: Long): Int {
+    fun delete(id: Long): Boolean {
         logger.info("Deleting row with id: {}", id)
         val result: Int = mapper.delete(id)
         logger.info("Deleted {} rows", result)
-        return result
+        return result > 0
     }
 
     private fun collectDtoFull(productList: List<Product>): List<ProductDtoFull> {

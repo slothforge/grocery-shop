@@ -45,7 +45,10 @@ class ProductGroupService {
     }
 
     fun delete(id: Long): Boolean {
-        return mapper.delete(id) > 0
+        logger.info("Deleting row with id: {}", id)
+        val result: Int = mapper.delete(id)
+        logger.info("Deleted {} rows", result)
+        return result > 0
     }
 
     private fun insert(name: String, description: String): ProductGroup {
