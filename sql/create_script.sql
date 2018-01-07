@@ -15,16 +15,57 @@ CREATE TABLE product (
   price_per_unit REAL      NOT NULL
 );
 
--- Product to Group table
+-- Product to Product Group table
 
 CREATE TABLE product_to_group (
-  product_id       BIGSERIAL NOT NULL REFERENCES product (id),
-  product_group_id BIGSERIAL NOT NULL REFERENCES product_group (id),
+  product_id       BIGINT NOT NULL REFERENCES product (id),
+  product_group_id BIGINT NOT NULL REFERENCES product_group (id),
   CONSTRAINT product_to_group_pk PRIMARY KEY (product_id, product_group_id)
 );
 
 CREATE INDEX i_product_to_group__product_group_id
   ON product_to_group (product_group_id);
+
+-- User table
+
+CREATE TABLE "user" (
+  id            BIGSERIAL NOT NULL PRIMARY KEY,
+  email         TEXT      NOT NULL UNIQUE,
+  password_hash INT       NOT NULL, -- TODO specify type
+  real_name     TEXT      NOT NULL,
+  role          TEXT      NOT NULL
+);
+
+-- Cart table
+
+CREATE TABLE cart (
+  id          BIGSERIAL NOT NULL PRIMARY KEY,
+  customer_id BIGINT    NOT NULL REFERENCES "user" (id),
+  product_id  BIGINT    NOT NULL REFERENCES product (id),
+  quantity    INT       NOT NULL,
+  UNIQUE (customer_id, product_id)
+);
+
+-- Special Offer table
+
+CREATE TABLE special_offer (
+  id          BIGSERIAL                NOT NULL PRIMARY KEY,
+  name        TEXT                     NOT NULL,
+  priority    INT                      NOT NULL,
+  start_date  TIMESTAMP WITH TIME ZONE NOT NULL, -- TODO take into account "with time zone"
+  ending_date TIMESTAMP WITH TIME ZONE NOT NULL
+);
+
+-- Special Offer to Product table
+
+CREATE TABLE special_offer_to_product (
+  special_offer_id BIGINT NOT NULL REFERENCES special_offer (id),
+  product_id       BIGINT NOT NULL REFERENCES product (id),
+  CONSTRAINT special_offer_to_product_pk PRIMARY KEY (special_offer_id, product_id)
+);
+
+CREATE INDEX i_special_offer_to_product__product_id
+  ON special_offer_to_product (product_id);
 
 -- Supply table
 
@@ -36,19 +77,11 @@ CREATE TABLE supply (
   quantity     INT                         NOT NULL DEFAULT 1
 );
 
--- Customer table
-
-CREATE TABLE customer (
-  id         BIGSERIAL NOT NULL PRIMARY KEY,
-  first_name TEXT      NOT NULL,
-  last_name  TEXT      NOT NULL
-);
-
 -- Payment table
 
 CREATE TABLE payment (
   id           BIGSERIAL                   NOT NULL PRIMARY KEY,
-  customer_id  BIGINT                      NOT NULL REFERENCES customer (id),
+  customer_id  BIGINT                      NOT NULL REFERENCES "user" (id),
   payment_date TIMESTAMP WITHOUT TIME ZONE NOT NULL
 );
 

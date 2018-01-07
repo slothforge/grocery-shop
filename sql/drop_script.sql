@@ -7,13 +7,26 @@ DROP TABLE IF EXISTS sale;
 
 DROP TABLE IF EXISTS payment;
 
--- Customer table
-
-DROP TABLE IF EXISTS customer;
-
 -- Supply table
 
 DROP TABLE IF EXISTS supply;
+
+-- Special Offer to Product table
+
+DROP INDEX IF EXISTS i_special_offer_to_product__product_id;
+DROP TABLE IF EXISTS special_offer_to_product;
+
+-- Special Offer table
+
+DROP TABLE IF EXISTS special_offer;
+
+-- Cart table
+
+DROP TABLE IF EXISTS cart;
+
+-- User table
+
+DROP TABLE IF EXISTS "user";
 
 -- Product to Group table
 
