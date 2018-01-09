@@ -18,7 +18,7 @@ class ProductRestController {
 
     @RequestMapping("/add", method = [(RequestMethod.POST)])
     fun insert(@RequestBody dto: ProductDtoUpdate): ProductDtoFull {
-        return productService.add(dto)
+        return productService.insert(dto)
     }
 
     @RequestMapping("/{id}", method = [(RequestMethod.PUT)])

@@ -2,10 +2,7 @@ package net.slothforge.groceryshop.mapper;
 
 import net.slothforge.groceryshop.entity.Product;
 import net.slothforge.groceryshop.entity.Unit;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.NotNull;
@@ -21,7 +18,7 @@ import java.util.List;
 public interface ProductMapper {
 
     //language=SQL
-    String SELECT_PRODUCT = "SELECT pr.id, pr.name, pr.unit rawUnit, pr.price_per_unit price FROM product pr ";
+    String SELECT_PRODUCT = "SELECT p.id, p.name, p.unit rawUnit, p.price_per_unit price FROM product p ";
     String RETURN_PRODUCT = "RETURNING id, name, unit, price_per_unit";
 
     //language=SQL
@@ -29,9 +26,11 @@ public interface ProductMapper {
     List<Product> listAll();
 
     //language=SQL
-    @Select(SELECT_PRODUCT + "LIMIT #{limit} OFFSET #{offset};")
-    List<Product> listForLimitAndOffset(@Param("limit") int limit,
-                                        @Param("offset") int offset);
+    @Select(SELECT_PRODUCT +
+            "LEFT JOIN product_to_group ptg ON p.id = ptg.product_id " +
+            "LEFT JOIN product_group pg ON ptg.product_group_id = pg.id " +
+            "WHERE pg.id = #{productGroupId};")
+    List<Product> listByProductGroupId(@Param("productGroupId") long productGroupId);
 
     //language=SQL
     @Select("INSERT INTO product (name, unit, price_per_unit) " +

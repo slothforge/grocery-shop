@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
 /**
  * For some reason IDEA does not support language injection for string concatenation in Kotlin classes
@@ -17,7 +16,7 @@ import java.util.Set;
  */
 
 @Mapper
-//@Repository//TODO deal with spring initialization error
+@Repository
 public interface ProductGroupMapper {
 
     //language=SQL
@@ -32,12 +31,12 @@ public interface ProductGroupMapper {
     @Select(SELECT_PRODUCT_GROUP +
             "JOIN product_to_group ptg ON pg.id = ptg.product_group_id " +
             "WHERE ptg.product_id = #{productId};")
-    Set<ProductGroup> listByProductId(@Param("productId") long productId);
+    List<ProductGroup> listByProductId(@Param("productId") long productId);
 
     //language=SQL
     @Select("INSERT INTO product_group (name, description) " +
             "VALUES (#{name}, #{description}) " +
-            RETURN_PRODUCT_GROUP + ";")//TODO safe
+            RETURN_PRODUCT_GROUP + ";")
     ProductGroup insert(@Param("name") @NotNull String name,
                         @Param("description") @NotNull String description);
 

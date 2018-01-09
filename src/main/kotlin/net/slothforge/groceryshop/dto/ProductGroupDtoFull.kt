@@ -2,7 +2,7 @@ package net.slothforge.groceryshop.dto
 
 import net.slothforge.groceryshop.entity.ProductGroup
 
-data class ProductGroupDtoFull(
+class ProductGroupDtoFull(
         val id: Long,
         val name: String,
         val description: String

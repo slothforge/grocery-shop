@@ -14,13 +14,11 @@ class ProductGroupRestController {
     private lateinit var productGroupService: ProductGroupService
 
     @RequestMapping("/all", method = [(RequestMethod.GET)])
-    fun listAll(): List<ProductGroupDtoFull> {
-        return productGroupService.listAll()
-    }
+    fun listAll(): List<ProductGroupDtoFull> = productGroupService.listAll()
 
     @RequestMapping("/add", method = [(RequestMethod.POST)])
     fun insert(@RequestBody dto: ProductGroupDtoUpdate): ProductGroupDtoFull {
-        return productGroupService.add(dto)
+        return productGroupService.insert(dto)
     }
 
     @RequestMapping("/{id}", method = [(RequestMethod.PUT)])

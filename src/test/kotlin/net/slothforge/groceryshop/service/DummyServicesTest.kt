@@ -31,7 +31,7 @@ class DummyServicesTest {
     fun productGroupServiceDummyTest() {
         val dtoUpdate = ProductGroupDtoUpdate("test", "test")
 
-        val inserted: ProductGroupDtoFull = productGroupService.add(dtoUpdate)
+        val inserted: ProductGroupDtoFull = productGroupService.insert(dtoUpdate)
         productGroupService.update(inserted.id, dtoUpdate)
         productGroupService.listAll()
         productGroupService.delete(inserted.id)
@@ -41,7 +41,7 @@ class DummyServicesTest {
     fun productServiceDummyTest() {
         val dtoUpdate = ProductDtoUpdate("test", Unit.ONE, 0f)
 
-        val inserted: ProductDtoFull = productService.add(dtoUpdate)
+        val inserted: ProductDtoFull = productService.insert(dtoUpdate)
         productService.update(inserted.id, dtoUpdate)
         productService.listAll()
         productService.delete(inserted.id)
