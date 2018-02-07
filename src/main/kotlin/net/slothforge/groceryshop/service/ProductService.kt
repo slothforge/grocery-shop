@@ -31,7 +31,7 @@ class ProductService {
 
     // Extension Functions
     private fun Product.toDtoFull(): ProductDtoFull =
-            ProductDtoFull(this, { productGroupService.listByProductId(id) })
+            ProductDtoFull(this, productGroupService.listByProductId(id))
 
     private fun List<Product>.mapToDtoFull(): List<ProductDtoFull> = map { it.toDtoFull() }
 }

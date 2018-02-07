@@ -1,28 +1,28 @@
--- Sale table
-
-DROP INDEX IF EXISTS i_sale__product_id;
-DROP TABLE IF EXISTS sale;
-
--- Payment table
-
-DROP TABLE IF EXISTS payment;
-
--- Supply table
-
-DROP TABLE IF EXISTS supply;
-
--- Special Offer to Product table
-
-DROP INDEX IF EXISTS i_special_offer_to_product__product_id;
-DROP TABLE IF EXISTS special_offer_to_product;
-
--- Special Offer table
-
-DROP TABLE IF EXISTS special_offer;
-
--- Cart table
-
-DROP TABLE IF EXISTS cart;
+-- -- Sale table
+-- --
+-- DROP INDEX IF EXISTS i_sale__product_id;
+-- DROP TABLE IF EXISTS sale;
+-- --
+-- -- Payment table
+-- --
+-- DROP TABLE IF EXISTS payment;
+-- --
+-- -- Supply table
+-- --
+-- DROP TABLE IF EXISTS supply;
+-- --
+-- -- Special Offer to Product table
+-- --
+-- DROP INDEX IF EXISTS i_special_offer_to_product__product_id;
+-- DROP TABLE IF EXISTS special_offer_to_product;
+-- --
+-- -- Special Offer table
+-- --
+-- DROP TABLE IF EXISTS special_offer;
+-- --
+-- -- Cart table
+-- --
+-- DROP TABLE IF EXISTS cart;
 
 -- User table
 

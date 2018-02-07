@@ -18,7 +18,12 @@ import java.util.List;
 public interface ProductMapper {
 
     //language=SQL
-    String SELECT_PRODUCT = "SELECT p.id, p.name, p.unit rawUnit, p.price_per_unit price FROM product p ";
+    String SELECT_PRODUCT = "SELECT " +
+            "p.id, " +
+            "p.name, " +
+            "p.unit rawUnit, " +
+            "p.price_per_unit price " +
+            "FROM product p ";
     String RETURN_PRODUCT = "RETURNING id, name, unit, price_per_unit";
 
     //language=SQL

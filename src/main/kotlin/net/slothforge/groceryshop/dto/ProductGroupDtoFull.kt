@@ -2,10 +2,9 @@ package net.slothforge.groceryshop.dto
 
 import net.slothforge.groceryshop.entity.ProductGroup
 
-class ProductGroupDtoFull(
-        val id: Long,
-        val name: String,
-        val description: String
-) {
-    constructor(entity: ProductGroup) : this(entity.id, entity.name, entity.description)
+class ProductGroupDtoFull(entity: ProductGroup) {
+
+    val id: Long = entity.id
+    val name: String = entity.name
+    val description: String = entity.description
 }

@@ -15,7 +15,7 @@
             </div>
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
-                <li><a href="/product-group/all">Product Group API</a></li>
+                <li><a href="/rest/product-group/all">Product Group API</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Not now</a></li>

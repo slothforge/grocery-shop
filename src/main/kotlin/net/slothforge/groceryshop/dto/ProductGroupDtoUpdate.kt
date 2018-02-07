@@ -1,10 +1,9 @@
 package net.slothforge.groceryshop.dto
 
-/**
- * Jackson requires empty constructor for JSON deserialization
- */
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
 
-class ProductGroupDtoUpdate(
-        val name: String = "",
-        val description: String = ""
+class ProductGroupDtoUpdate @JsonCreator constructor(
+        @JsonProperty val name: String,
+        @JsonProperty val description: String
 )

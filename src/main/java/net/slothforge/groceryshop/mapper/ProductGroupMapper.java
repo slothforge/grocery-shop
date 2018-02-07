@@ -20,7 +20,11 @@ import java.util.List;
 public interface ProductGroupMapper {
 
     //language=SQL
-    String SELECT_PRODUCT_GROUP = "SELECT pg.id, pg.name, pg.description FROM product_group pg ";
+    String SELECT_PRODUCT_GROUP = "SELECT " +
+            "pg.id, " +
+            "pg.name, " +
+            "pg.description " +
+            "FROM product_group pg ";
     String RETURN_PRODUCT_GROUP = "RETURNING id, name, description";
 
     //language=SQL
