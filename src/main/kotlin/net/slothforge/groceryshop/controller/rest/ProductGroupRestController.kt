@@ -1,7 +1,7 @@
 package net.slothforge.groceryshop.controller.rest
 
 import net.slothforge.groceryshop.dto.ProductGroupDtoFull
-import net.slothforge.groceryshop.dto.ProductGroupDtoUpdate
+import net.slothforge.groceryshop.dto.ProductGroupDto
 import net.slothforge.groceryshop.service.ProductGroupService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -17,13 +17,13 @@ class ProductGroupRestController {
     fun listAll(): List<ProductGroupDtoFull> = productGroupService.listAll()
 
     @RequestMapping("/add", method = [(RequestMethod.POST)])
-    fun insert(@RequestBody dto: ProductGroupDtoUpdate): ProductGroupDtoFull {
+    fun insert(@RequestBody dto: ProductGroupDto): ProductGroupDtoFull {
         return productGroupService.insert(dto)
     }
 
     @RequestMapping("/{id}", method = [(RequestMethod.PUT)])
     fun update(@PathVariable id: Long,
-               @RequestBody dto: ProductGroupDtoUpdate): ProductGroupDtoFull {
+               @RequestBody dto: ProductGroupDto): ProductGroupDtoFull {
         return productGroupService.update(id, dto)
     }
 

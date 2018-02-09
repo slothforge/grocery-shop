@@ -22,6 +22,12 @@ public interface ProductToGroupMapper {
                @Param("productGroupId") long productGroupId);
 
     //language=SQL
+    @Delete("DELETE FROM product_to_group " +
+            "WHERE product_id = #{productId} AND product_group_id = #{productGroupId};")
+    int delete(@Param("productId") long productId,
+               @Param("productGroupId") long productGroupId);
+
+    //language=SQL
     @Delete("DELETE FROM product_to_group WHERE product_id = #{productId};")
     int deleteByProductId(@Param("productId") long productId);
 }

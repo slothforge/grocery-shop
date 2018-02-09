@@ -24,7 +24,8 @@ public interface ProductMapper {
             "p.unit rawUnit, " +
             "p.price_per_unit price " +
             "FROM product p ";
-    String RETURN_PRODUCT = "RETURNING id, name, unit, price_per_unit";
+
+    String RETURN_PRODUCT = "RETURNING id, name, unit rawUnit, price_per_unit price";
 
     //language=SQL
     @Select(SELECT_PRODUCT)
@@ -33,14 +34,18 @@ public interface ProductMapper {
     //language=SQL
     @Select(SELECT_PRODUCT +
             "LEFT JOIN product_to_group ptg ON p.id = ptg.product_id " +
-            "LEFT JOIN product_group pg ON ptg.product_group_id = pg.id " +
-            "WHERE pg.id = #{productGroupId};")
+            "WHERE ptg.product_group_id = #{productGroupId};")
     List<Product> listByProductGroupId(@Param("productGroupId") long productGroupId);
+
+    //language=SQL
+    @Select(SELECT_PRODUCT +
+            "WHERE p.id = #{id};")
+    Product findById(@Param("id") long id);
 
     //language=SQL
     @Select("INSERT INTO product (name, unit, price_per_unit) " +
             "VALUES (#{name}, #{unit}, #{price}) " +
-            RETURN_PRODUCT + ";")
+            RETURN_PRODUCT)
     Product insert(@Param("name") @NotNull String name,
                    @Param("unit") @NotNull Unit unit,
                    @Param("price") float price);
@@ -49,7 +54,7 @@ public interface ProductMapper {
     @Select("UPDATE product " +
             "SET name = #{name}, unit = #{unit}, price_per_unit = #{price} " +
             "WHERE id = #{id} " +
-            RETURN_PRODUCT + ";")
+            RETURN_PRODUCT)
     Product update(@Param("id") long id,
                    @Param("name") @NotNull String name,
                    @Param("unit") @NotNull Unit unit,

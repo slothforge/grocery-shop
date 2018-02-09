@@ -2,9 +2,9 @@ package net.slothforge.groceryshop.service
 
 import net.slothforge.groceryshop.Application
 import net.slothforge.groceryshop.dto.ProductDtoFull
-import net.slothforge.groceryshop.dto.ProductDtoUpdate
+import net.slothforge.groceryshop.dto.ProductDto
 import net.slothforge.groceryshop.dto.ProductGroupDtoFull
-import net.slothforge.groceryshop.dto.ProductGroupDtoUpdate
+import net.slothforge.groceryshop.dto.ProductGroupDto
 import net.slothforge.groceryshop.entity.Unit
 import net.slothforge.groceryshop.mapper.ProductGroupMapper
 import org.junit.jupiter.api.Test
@@ -29,7 +29,7 @@ class DummyServicesTest {
 
     @Test
     fun productGroupServiceDummyTest() {
-        val dtoUpdate = ProductGroupDtoUpdate("test", "test")
+        val dtoUpdate = ProductGroupDto("test", "test")
 
         val inserted: ProductGroupDtoFull = productGroupService.insert(dtoUpdate)
         productGroupService.update(inserted.id, dtoUpdate)
@@ -39,7 +39,7 @@ class DummyServicesTest {
 
     @Test
     fun productServiceDummyTest() {
-        val dtoUpdate = ProductDtoUpdate("test", Unit.ONE, 0f)
+        val dtoUpdate = ProductDto("test", Unit.ONE, 0f)
 
         val inserted: ProductDtoFull = productService.insert(dtoUpdate)
         productService.update(inserted.id, dtoUpdate)
