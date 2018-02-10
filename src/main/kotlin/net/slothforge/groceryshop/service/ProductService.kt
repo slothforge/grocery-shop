@@ -22,8 +22,8 @@ class ProductService {
 
     fun listAll(): List<ProductDtoFull> = productMapper.listAll().mapToDtoFull()
 
-    fun listByProductGroup(dtoFull: ProductDtoFull): List<ProductDtoFull> =
-            productMapper.listByProductGroupId(dtoFull.id).mapToDtoFull()
+    fun listByProductGroup(productGroupId: Long): List<ProductDtoFull> =
+            productMapper.listByProductGroupId(productGroupId).mapToDtoFull()
 
     fun findById(id: Long): ProductDtoFull = productMapper.findById(id).toDtoFull()
 
@@ -46,8 +46,8 @@ class ProductService {
         val updated: Product = productMapper.update(id, dto.name, dto.unit, dto.price)
 
         val relatedProductGroupList = productGroupService.listByProductId(updated.id)
-        val addedProductGroupList = relatedProductGroupList - groups
-        val removedProductGroupList = groups - relatedProductGroupList
+        val addedProductGroupList = groups - relatedProductGroupList
+        val removedProductGroupList = relatedProductGroupList - groups
 
         addedProductGroupList.forEach { productToGroupMapper.insert(updated.id, it.id) }
         removedProductGroupList.forEach { productToGroupMapper.delete(updated.id, it.id) }

@@ -1,10 +1,17 @@
 package net.slothforge.groceryshop.dto
 
 import net.slothforge.groceryshop.entity.Product
+import net.slothforge.groceryshop.entity.Unit
 
-class ProductDtoFull(entity: Product, lazyGroups: () -> List<ProductGroupDtoFull>)
-    : ProductDto(entity.name, entity.unit, entity.price) {
+data class ProductDtoFull(
+        val id: Long,
+        val name: String,
+        val unit: Unit,
+        val price: Float,
+        private val lazyGroups: () -> List<ProductGroupDtoFull>
+) {
+    val groups: List<ProductGroupDtoFull> by lazy(lazyGroups)
 
-    val id: Long = entity.id
-    val groups: List<ProductGroupDtoFull> by lazy { run(lazyGroups) }
+    constructor(entity: Product, lazyGroups: () -> List<ProductGroupDtoFull>):
+            this(entity.id, entity.name, entity.unit, entity.price, lazyGroups)
 }

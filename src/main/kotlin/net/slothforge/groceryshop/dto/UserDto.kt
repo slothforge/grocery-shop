@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import net.slothforge.groceryshop.entity.Role
 
-open class UserDto @JsonCreator constructor(
+data class UserDto @JsonCreator constructor(
         @JsonProperty val passwordHash: String,
         @JsonProperty val email: String,
         @JsonProperty val realName: String,
