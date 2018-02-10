@@ -2,7 +2,6 @@
 
 # idea staff
 .idea/
-*.iml
 
 # gradle build output
 .gradle/

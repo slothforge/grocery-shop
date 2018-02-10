@@ -1,25 +1,25 @@
 -- Product Group table
 
 CREATE TABLE product_group (
-  id          BIGSERIAL NOT NULL PRIMARY KEY,
-  name        TEXT      NOT NULL,
-  description TEXT      NOT NULL DEFAULT ''
+  id          SERIAL NOT NULL PRIMARY KEY,
+  name        TEXT   NOT NULL,
+  description TEXT   NOT NULL DEFAULT ''
 );
 
 -- Product table
 
 CREATE TABLE product (
-  id             BIGSERIAL NOT NULL PRIMARY KEY,
-  name           TEXT      NOT NULL,
-  unit           TEXT      NOT NULL,
-  price_per_unit REAL      NOT NULL
+  id             SERIAL NOT NULL PRIMARY KEY,
+  name           TEXT   NOT NULL,
+  unit           TEXT   NOT NULL,
+  price_per_unit FLOAT  NOT NULL
 );
 
 -- Product to Product Group table
 
 CREATE TABLE product_to_group (
-  product_id       BIGINT NOT NULL REFERENCES product (id),
-  product_group_id BIGINT NOT NULL REFERENCES product_group (id),
+  product_id       INT NOT NULL REFERENCES product (id),
+  product_group_id INT NOT NULL REFERENCES product_group (id),
   CONSTRAINT product_to_group_pk PRIMARY KEY (product_id, product_group_id)
 );
 
@@ -29,11 +29,11 @@ CREATE INDEX i_product_to_group__product_group_id
 -- User table
 
 CREATE TABLE "user" (
-  id            BIGSERIAL NOT NULL PRIMARY KEY,
-  password_hash TEXT      NOT NULL,
-  email         TEXT      NOT NULL UNIQUE,
-  real_name     TEXT      NOT NULL,
-  role          TEXT      NOT NULL
+  id            SERIAL NOT NULL PRIMARY KEY,
+  password_hash TEXT   NOT NULL,
+  email         TEXT   NOT NULL UNIQUE,
+  real_name     TEXT   NOT NULL,
+  role          TEXT   NOT NULL
 );
 
 -- -- Cart table
