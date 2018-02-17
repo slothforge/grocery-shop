@@ -2,7 +2,7 @@ buildscript {
     ext.java_version = '1.8'
     ext.kotlin_version = '1.2.21'
     ext.spring_boot_version = '1.5.9.RELEASE'
-    ext.junit_version = '5.0.2'
+    ext.junit_version = '5.0.3'
 
     repositories {
         mavenCentral()
@@ -24,6 +24,7 @@ sourceCompatibility = "$java_version"
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -32,7 +33,7 @@ dependencies {
 
     //database
     compile "org.postgresql:postgresql:9.4.1212"
-    compile "org.hibernate:hibernate-core:5.2.12.Final"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:1.5.10.RELEASE"
 
     // spring boot
     compile("org.springframework.boot:spring-boot-starter-web:$spring_boot_version") {
@@ -45,7 +46,14 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.7'
 
     // tests
-    testCompile "junit:junit:4.12"
+    testCompile "org.assertj:assertj-core:3.9.0"
+
+    testCompile "org.junit.jupiter:junit-jupiter-api:$junit_version"
+    testCompile "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+    testCompile "com.github.sbrannen:spring-test-junit5:1.0.3"
+
+    testCompile "org.springframework.boot:spring-boot-starter-test:$spring_boot_version"
+
 }
 
 // Configure tasks
