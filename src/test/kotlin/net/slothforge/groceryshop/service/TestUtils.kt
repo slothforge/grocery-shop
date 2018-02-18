@@ -2,8 +2,6 @@ package net.slothforge.groceryshop.service
 
 import net.slothforge.groceryshop.dto.ProductDto
 import net.slothforge.groceryshop.dto.ProductGroupDto
-import net.slothforge.groceryshop.dto.create.ProductCreateDto
-import net.slothforge.groceryshop.dto.create.ProductGroupCreateDto
 import net.slothforge.groceryshop.entity.Product
 import net.slothforge.groceryshop.entity.ProductGroup
 import net.slothforge.groceryshop.entity.Unit
@@ -43,20 +41,3 @@ internal class TestUtils {
         }
     }
 }
-
-internal fun Product.toDto() = ProductDto(this)
-
-internal fun Product.toCreateDto() = ProductCreateDto(name, unit, price, groups.map { it.toDto() })
-
-internal fun ProductGroup.toDto() = ProductGroupDto(this)
-
-internal fun ProductGroup.toCreateDto() = ProductGroupCreateDto(name, description)
-
-// TODO any way to use refiled type?
-internal fun Iterable<Product>.toProductDtoList() = map { it.toDto() }
-
-internal fun Iterable<Product>.toProductCreateDtoList() = map { it.toCreateDto() }
-
-internal fun Iterable<ProductGroup>.toProductGroupDtoList() = map { it.toDto() }
-
-internal fun Iterable<ProductGroup>.toProductGroupCreateDtoList() = map { it.toCreateDto() }

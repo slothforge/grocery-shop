@@ -14,7 +14,7 @@ class ProductService {
     private lateinit var repository: ProductRepository
 
     fun listAll(): List<ProductDto> =
-            repository.findAll().mapToDtoList()
+            repository.findAll().toDtoList()
 
     fun findById(id: Int): ProductDto =
             repository.findOne(id).toDto()
@@ -23,20 +23,21 @@ class ProductService {
             repository.save(dto.toEntity()).toDto()
 
     fun insert(dtoList: List<ProductCreateDto>): List<ProductDto> =
-            repository.save(dtoList.map { it.toEntity() }).mapToDtoList()
+            repository.save(dtoList.map { it.toEntity() }).toDtoList()
 
     fun update(dto: ProductDto): ProductDto =
             repository.save(dto.toEntity()).toDto()
 
     fun update(dtoList: List<ProductDto>): List<ProductDto> =
-            repository.save(dtoList.map { it.toEntity() }).mapToDtoList()
+            repository.save(dtoList.map { it.toEntity() }).toDtoList()
 
     fun delete(id: Int) = repository.delete(id)
-
-    // Extension Functions
-    //TODO handle npe
-    private fun Product.toDto() = ProductDto(this)
-
-    private fun Iterable<Product>.mapToDtoList() = map { it.toDto() }
-
 }
+
+internal fun Product?.toDto() = ProductDto(checkNotNull(this))
+
+internal fun Product?.toCreateDto() = ProductCreateDto(checkNotNull(this))
+
+internal fun Iterable<Product>.toDtoList() = map { it.toDto() }
+
+internal fun Iterable<Product>.toCreateDtoList() = map { it.toCreateDto() }

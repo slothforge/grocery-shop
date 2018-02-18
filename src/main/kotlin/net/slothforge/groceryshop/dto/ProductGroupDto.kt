@@ -7,11 +7,7 @@ data class ProductGroupDto(
         val name: String,
         val description: String
 ) {
-    constructor(entity: ProductGroup) : this(
-            entity.id,
-            entity.name,
-            entity.description
-    )
+    constructor(entity: ProductGroup) : this(entity.id, entity.name, entity.description)
 
     fun toEntity() = ProductGroup(id, name, description)
 }

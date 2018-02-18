@@ -32,7 +32,7 @@ internal class ProductGroupServiceTest {
 
         lateinit var expected: List<ProductGroupDto>
         try {
-            expected = repository.save(productGroupList).toProductGroupDtoList()
+            expected = repository.save(productGroupList).toDtoList()
 
             val actual: List<ProductGroupDto> = service.listAll()
 
@@ -81,9 +81,9 @@ internal class ProductGroupServiceTest {
         //TODO list ids
         lateinit var expected: List<ProductGroupDto>
         try {
-            expected = service.insert(productGroupList.toProductGroupCreateDtoList())
+            expected = service.insert(productGroupList.toCreateDtoList())
 
-            val actual: List<ProductGroupDto> = repository.findAll(expected.map { it.id }).toProductGroupDtoList()
+            val actual: List<ProductGroupDto> = repository.findAll(expected.map { it.id }).toDtoList()
 
             assertThat(actual).isEqualTo(expected)
         } finally {
@@ -119,7 +119,7 @@ internal class ProductGroupServiceTest {
 
             expected = service.update(idList.map { randomProductGroupDto(it) })
 
-            val actual: List<ProductGroupDto> = repository.findAll(expected.map { it.id }).toProductGroupDtoList()
+            val actual: List<ProductGroupDto> = repository.findAll(expected.map { it.id }).toDtoList()
 
             assertThat(actual).isEqualTo(expected)
         } finally {

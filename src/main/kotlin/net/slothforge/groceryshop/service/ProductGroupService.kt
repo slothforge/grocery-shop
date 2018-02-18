@@ -14,7 +14,7 @@ class ProductGroupService {
     private lateinit var repository: ProductGroupRepository
 
     fun listAll(): List<ProductGroupDto> =
-            repository.findAll().mapToDtoList()
+            repository.findAll().toDtoList()
 
     fun findById(id: Int): ProductGroupDto =
             repository.findOne(id).toDto()
@@ -23,19 +23,22 @@ class ProductGroupService {
             repository.save(dto.toEntity()).toDto()
 
     fun insert(dtoList: List<ProductGroupCreateDto>): List<ProductGroupDto> =
-            repository.save(dtoList.map { it.toEntity() }).mapToDtoList()
+            repository.save(dtoList.map { it.toEntity() }).toDtoList()
 
     fun update(dto: ProductGroupDto): ProductGroupDto =
             repository.save(dto.toEntity()).toDto()
 
     fun update(dtoList: List<ProductGroupDto>): List<ProductGroupDto> =
-            repository.save(dtoList.map { it.toEntity() }).mapToDtoList()
+            repository.save(dtoList.map { it.toEntity() }).toDtoList()
 
     fun delete(id: Int) = repository.delete(id)
 
-    // Extension Functions
-    private fun ProductGroup.toDto() = ProductGroupDto(this)
-
-    private fun Iterable<ProductGroup>.mapToDtoList() = map { it.toDto() }
-
 }
+
+internal fun ProductGroup?.toDto() = ProductGroupDto(checkNotNull(this))
+
+internal fun ProductGroup?.toCreateDto() = ProductGroupCreateDto(checkNotNull(this))
+
+internal fun Iterable<ProductGroup>.toDtoList() = map { it.toDto() }
+
+internal fun Iterable<ProductGroup>.toCreateDtoList() = map { it.toCreateDto() }

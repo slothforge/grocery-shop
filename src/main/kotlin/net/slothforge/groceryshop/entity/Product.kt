@@ -1,6 +1,5 @@
 package net.slothforge.groceryshop.entity
 
-import net.slothforge.groceryshop.dto.ProductDto
 import javax.persistence.*
 import javax.persistence.GenerationType.SEQUENCE
 
