@@ -2,9 +2,9 @@
 
 # idea staff
 .idea/
-*.iml
 
 # gradle build output
+gradle/
 .gradle/
 build/
 out/

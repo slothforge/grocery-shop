@@ -1,20 +1,26 @@
 package net.slothforge.groceryshop.entity
 
+import javax.persistence.*
+import javax.persistence.GenerationType.SEQUENCE
+
+@Entity
+@Table(name = "product")
 data class Product(
-        val id: Long,
-        val name: String,
-        val unit: Unit,
-        val price: Float
-) {
-    // Used by MyBatis
-    private constructor(id: Long, name: String, rawUnit: String, price: Float)
-            : this(id, name, Unit.valueOf(rawUnit), price)
-}
+        @Id
+        @GeneratedValue(strategy = SEQUENCE)
+        val id: Int = -1,
 
-enum class Unit {
-    ONE, KG, GR, LITER;
+        val name: String = "",
 
-    override fun toString(): String {
-        return super.toString().toLowerCase()
-    }
-}
+        val unit: Unit = Unit.UNSPECIFIED,
+
+        @Column(name = "price_per_unit")
+        val price: Double = -1.0,
+
+        @ManyToMany(fetch = FetchType.EAGER, cascade = [(CascadeType.ALL)])
+        @JoinTable(name = "product_to_group",
+                joinColumns = [(JoinColumn(name = "product_id"))],
+                inverseJoinColumns = [(JoinColumn(name = "product_group_id"))]
+        )
+        val groups: List<ProductGroup> = ArrayList()
+)

@@ -2,7 +2,7 @@ buildscript {
     ext.java_version = '1.8'
     ext.kotlin_version = '1.2.21'
     ext.spring_boot_version = '1.5.9.RELEASE'
-    ext.junit_version = '5.0.2'
+    ext.junit_version = '5.0.3'
 
     repositories {
         mavenCentral()
@@ -33,32 +33,29 @@ dependencies {
 
     //database
     compile "org.postgresql:postgresql:9.4.1212"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:1.5.10.RELEASE"
 
     // spring boot
     compile("org.springframework.boot:spring-boot-starter-web:$spring_boot_version") {
         exclude module: "spring-boot-starter-tomcat"
     }
     compile "org.springframework.boot:spring-boot-starter-jetty:$spring_boot_version"
-    compile "org.springframework.boot:spring-boot-starter-freemarker:$spring_boot_version"
-
-    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.1'
 
     // utils
     compile 'joda-time:joda-time:2.9.9'
     compile 'org.apache.commons:commons-lang3:3.7'
 
     // tests
-    testCompile "org.springframework.boot:spring-boot-starter-test:$spring_boot_version"
-    testCompile 'com.github.sbrannen:spring-test-junit5:1.0.2'
+    testCompile "org.assertj:assertj-core:3.9.0"
 
     testCompile "org.junit.jupiter:junit-jupiter-api:$junit_version"
+    testCompile "org.junit.jupiter:junit-jupiter-engine:$junit_version"
     testCompile "org.junit.jupiter:junit-jupiter-params:$junit_version"
-    testRuntime "org.junit.jupiter:junit-jupiter-engine:$junit_version"
+    testCompile "com.github.sbrannen:spring-test-junit5:1.0.3"
 
-    testCompile 'org.mockito:mockito-all:1.10.19'
-    testCompile 'org.assertj:assertj-core:3.8.0'
+    testCompile "org.springframework.boot:spring-boot-starter-test:$spring_boot_version"
+
 }
-
 
 // Configure tasks
 compileKotlin {
@@ -67,19 +64,3 @@ compileKotlin {
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
-
-jar {
-    baseName = 'grocery-shop'
-    version = '1.0'
-}
-
-// Required by Heroku
-task stage(dependsOn: ['build', 'clean'])
-build.mustRunAfter clean
-
-task copyToLib(type: Copy) {
-    into "$buildDir/lib"
-    from(configurations.compile)
-}
-
-stage.dependsOn(copyToLib)

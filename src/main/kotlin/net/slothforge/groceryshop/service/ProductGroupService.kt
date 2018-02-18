@@ -1,36 +1,44 @@
 package net.slothforge.groceryshop.service
 
-import net.slothforge.groceryshop.dto.ProductGroupDtoFull
 import net.slothforge.groceryshop.dto.ProductGroupDto
+import net.slothforge.groceryshop.dto.create.ProductGroupCreateDto
 import net.slothforge.groceryshop.entity.ProductGroup
-import net.slothforge.groceryshop.mapper.ProductGroupMapper
+import net.slothforge.groceryshop.repository.ProductGroupRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 
-@Component
+@Service
 class ProductGroupService {
 
     @Autowired
-    private lateinit var mapper: ProductGroupMapper
+    private lateinit var repository: ProductGroupRepository
 
-    fun listAll(): List<ProductGroupDtoFull> = mapper.listAll().mapToDtoFull()
+    fun listAll(): List<ProductGroupDto> =
+            repository.findAll().toDtoList()
 
-    fun listByProductId(productId: Long): List<ProductGroupDtoFull> =
-            mapper.listByProductId(productId).mapToDtoFull()
+    fun findById(id: Int): ProductGroupDto =
+            repository.findOne(id).toDto()
 
-    fun findById(id: Long): ProductGroupDtoFull =
-            mapper.findById(id).toDtoFull()
+    fun insert(dto: ProductGroupCreateDto): ProductGroupDto =
+            repository.save(dto.toEntity()).toDto()
 
-    fun insert(dto: ProductGroupDto): ProductGroupDtoFull =
-            mapper.insert(dto.name, dto.description).toDtoFull()
+    fun insert(dtoList: List<ProductGroupCreateDto>): List<ProductGroupDto> =
+            repository.save(dtoList.map { it.toEntity() }).toDtoList()
 
-    fun update(id: Long, dto: ProductGroupDto): ProductGroupDtoFull =
-            mapper.update(id, dto.name, dto.description).toDtoFull()
+    fun update(id: Int, dto: ProductGroupCreateDto): ProductGroupDto =
+            repository.save(dto.toEntity(id)).toDto()
 
-    fun delete(id: Long): Boolean = mapper.delete(id) > 0
+    fun update(dtoList: List<ProductGroupDto>): List<ProductGroupDto> =
+            repository.save(dtoList.map { it.toEntity() }).toDtoList()
 
-    // Extension Functions
-    private fun ProductGroup.toDtoFull() = ProductGroupDtoFull(this)
+    fun delete(id: Int) = repository.delete(id)
 
-    private fun List<ProductGroup>.mapToDtoFull() = map { it.toDtoFull() }
 }
+
+internal fun ProductGroup?.toDto() = ProductGroupDto(checkNotNull(this))
+
+internal fun ProductGroup?.toCreateDto() = ProductGroupCreateDto(checkNotNull(this))
+
+internal fun Iterable<ProductGroup>.toDtoList() = map { it.toDto() }
+
+internal fun Iterable<ProductGroup>.toCreateDtoList() = map { it.toCreateDto() }
