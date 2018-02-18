@@ -33,13 +33,8 @@ class ProductService {
 
     fun delete(id: Int) = repository.delete(id)
 
-    fun delete(dto: ProductDto) =
-            repository.delete(dto.toEntity())
-
-    fun delete(dtoList: List<ProductDto>) =
-            repository.delete(dtoList.map { it.toEntity() })
-
     // Extension Functions
+    //TODO handle npe
     private fun Product.toDto() = ProductDto(this)
 
     private fun Iterable<Product>.mapToDtoList() = map { it.toDto() }

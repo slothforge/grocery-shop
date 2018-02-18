@@ -50,6 +50,7 @@ internal class ProductServiceTest {
         try {
             expected = repository.save(product).toDto()
 
+            ///TODO handle npe
             val actual: ProductDto = service.findById(expected.id)
 
             assertThat(actual).isEqualTo(expected)
@@ -146,59 +147,17 @@ internal class ProductServiceTest {
         }
     }
 
-    @ParameterizedTest
-    @MethodSource("oneProductSource")
-    fun deleteByDtoTest(product: Product) {
-
-        lateinit var expected: ProductDto
-        try {
-            expected = repository.save(product).toDto()
-
-            service.delete(expected)
-
-            val actual: Product? = repository.findOne(expected.id)
-
-            assertThat(actual).isNull()
-        } finally {
-            if (repository.findOne(expected.id) != null) {
-                repository.delete(expected.id)
-            }
-        }
-    }
-
-    @ParameterizedTest
-    @MethodSource("listOfProductSource")
-    fun deleteListTest(productList: List<Product>) {
-
-        lateinit var expected: List<ProductDto>
-        try {
-            expected = repository.save(productList).toProductDtoList()
-
-            service.delete(expected)
-
-            val actual = repository.findAll(expected.map { it.id })
-
-            assertThat(actual).isEmpty()
-        } finally {
-            expected.forEach {
-                if (repository.findOne(it.id) != null) {
-                    repository.delete(it.id)
-                }
-            }
-        }
-    }
-
     companion object {
         @JvmStatic
         private fun oneProductSource(): Stream<Arguments> {
-            return IntRange(0, 3)
+            return IntRange(0, 4)
                     .map { Arguments.of(TestUtils.randomProduct()) }
                     .stream()
         }
 
         @JvmStatic
         private fun listOfProductSource(): Stream<Arguments> {
-            return IntRange(0, 3)
+            return IntRange(0, 4)
                     .map { Arguments.of(IntRange(2, 5).map { TestUtils.randomProduct() }) }
                     .stream()
         }
