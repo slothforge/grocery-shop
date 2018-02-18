@@ -1,21 +1,19 @@
 package net.slothforge.groceryshop.entity
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
-import javax.persistence.GenerationType.AUTO
+import javax.persistence.GenerationType.SEQUENCE
 
 @Entity
 @Table(name = "product_group")
 data class ProductGroup(
         @Id
-        @GeneratedValue(strategy = AUTO)
-        var id: Int = -1,
+        @GeneratedValue(strategy = SEQUENCE)
+        val id: Int = -1,
 
-        var name: String = "",
+        val name: String = "",
 
-        var description: String = "",
+        val description: String = "",
 
-        @JsonIgnore
-        @ManyToMany(mappedBy = "groups", fetch = FetchType.LAZY)
-        var products: List<Product> = ArrayList()
+        @ManyToMany(mappedBy = "groups")
+        val products: List<Product> = ArrayList()
 )

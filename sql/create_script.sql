@@ -18,8 +18,8 @@ CREATE TABLE product (
 -- Product to Product Group table
 
 CREATE TABLE product_to_group (
-  product_id       INT NOT NULL REFERENCES product (id),
-  product_group_id INT NOT NULL REFERENCES product_group (id),
+  product_id       INT NOT NULL REFERENCES product (id) ON UPDATE CASCADE ON DELETE CASCADE,
+  product_group_id INT NOT NULL REFERENCES product_group (id) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT product_to_group_pk PRIMARY KEY (product_id, product_group_id)
 );
 

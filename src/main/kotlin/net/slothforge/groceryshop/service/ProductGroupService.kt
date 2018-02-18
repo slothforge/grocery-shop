@@ -33,6 +33,12 @@ class ProductGroupService {
 
     fun delete(id: Int) = repository.delete(id)
 
+    fun delete(dto: ProductGroupDto) =
+            repository.delete(dto.toEntity())
+
+    fun delete(dtoList: List<ProductGroupDto>) =
+            repository.delete(dtoList.map { it.toEntity() })
+
     // Extension Functions
     private fun ProductGroup.toDto() = ProductGroupDto(this)
 

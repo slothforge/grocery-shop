@@ -33,6 +33,12 @@ class ProductService {
 
     fun delete(id: Int) = repository.delete(id)
 
+    fun delete(dto: ProductDto) =
+            repository.delete(dto.toEntity())
+
+    fun delete(dtoList: List<ProductDto>) =
+            repository.delete(dtoList.map { it.toEntity() })
+
     // Extension Functions
     private fun Product.toDto() = ProductDto(this)
 

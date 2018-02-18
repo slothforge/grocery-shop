@@ -1,26 +1,27 @@
 package net.slothforge.groceryshop.entity
 
+import net.slothforge.groceryshop.dto.ProductDto
 import javax.persistence.*
-import javax.persistence.GenerationType.AUTO
+import javax.persistence.GenerationType.SEQUENCE
 
 @Entity
 @Table(name = "product")
 data class Product(
         @Id
-        @GeneratedValue(strategy = AUTO)
-        var id: Int = -1,
+        @GeneratedValue(strategy = SEQUENCE)
+        val id: Int = -1,
 
-        var name: String,
+        val name: String = "",
 
-        var unit: Unit,
+        val unit: Unit = Unit.UNSPECIFIED,
 
         @Column(name = "price_per_unit")
-        var price: Double,
+        val price: Double = -1.0,
 
-        @ManyToMany
+        @ManyToMany(fetch = FetchType.EAGER, cascade = [(CascadeType.ALL)])
         @JoinTable(name = "product_to_group",
                 joinColumns = [(JoinColumn(name = "product_id"))],
                 inverseJoinColumns = [(JoinColumn(name = "product_group_id"))]
         )
-        var groups: List<ProductGroup> = ArrayList()
+        val groups: List<ProductGroup> = ArrayList()
 )
