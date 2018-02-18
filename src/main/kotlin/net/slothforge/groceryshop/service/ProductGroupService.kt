@@ -25,8 +25,8 @@ class ProductGroupService {
     fun insert(dtoList: List<ProductGroupCreateDto>): List<ProductGroupDto> =
             repository.save(dtoList.map { it.toEntity() }).toDtoList()
 
-    fun update(dto: ProductGroupDto): ProductGroupDto =
-            repository.save(dto.toEntity()).toDto()
+    fun update(id: Int, dto: ProductGroupCreateDto): ProductGroupDto =
+            repository.save(dto.toEntity(id)).toDto()
 
     fun update(dtoList: List<ProductGroupDto>): List<ProductGroupDto> =
             repository.save(dtoList.map { it.toEntity() }).toDtoList()

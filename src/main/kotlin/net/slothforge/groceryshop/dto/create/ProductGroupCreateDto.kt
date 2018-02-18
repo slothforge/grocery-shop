@@ -5,10 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import net.slothforge.groceryshop.entity.ProductGroup
 
 data class ProductGroupCreateDto @JsonCreator constructor(
-        @JsonProperty val name: String,
-        @JsonProperty val description: String
+        @JsonProperty("name") val name: String,
+        @JsonProperty("description") val description: String
 ) {
     constructor(entity: ProductGroup) : this(entity.name, entity.description)
+
+    fun toEntity(id: Int) = ProductGroup(id, name, description)
 
     fun toEntity(): ProductGroup = ProductGroup(name = name, description = description)
 }

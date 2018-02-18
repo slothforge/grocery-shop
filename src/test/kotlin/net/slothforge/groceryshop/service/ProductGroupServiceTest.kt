@@ -4,6 +4,7 @@ import net.slothforge.groceryshop.Application
 import net.slothforge.groceryshop.dto.ProductGroupDto
 import net.slothforge.groceryshop.entity.ProductGroup
 import net.slothforge.groceryshop.repository.ProductGroupRepository
+import net.slothforge.groceryshop.service.TestUtils.Companion.randomProductGroupCreateDto
 import net.slothforge.groceryshop.service.TestUtils.Companion.randomProductGroupDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.extension.ExtendWith
@@ -99,7 +100,7 @@ internal class ProductGroupServiceTest {
         try {
             val (id: Int) = repository.save(productGroup)
 
-            expected = service.update(randomProductGroupDto(id))
+            expected = service.update(id, randomProductGroupCreateDto())
 
             val actual: ProductGroupDto = repository.findOne(id).toDto()
 
@@ -129,7 +130,7 @@ internal class ProductGroupServiceTest {
 
     @ParameterizedTest
     @MethodSource("oneProductGroupSource")
-    fun deleteByIdTest(productGroup: ProductGroup) {
+    fun deleteTest(productGroup: ProductGroup) {
 
         var insertedId: Int? = null
         try {

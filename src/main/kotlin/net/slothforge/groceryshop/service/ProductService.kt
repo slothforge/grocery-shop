@@ -25,8 +25,8 @@ class ProductService {
     fun insert(dtoList: List<ProductCreateDto>): List<ProductDto> =
             repository.save(dtoList.map { it.toEntity() }).toDtoList()
 
-    fun update(dto: ProductDto): ProductDto =
-            repository.save(dto.toEntity()).toDto()
+    fun update(id: Int, dto: ProductCreateDto): ProductDto =
+            repository.save(dto.toEntity(id)).toDto()
 
     fun update(dtoList: List<ProductDto>): List<ProductDto> =
             repository.save(dtoList.map { it.toEntity() }).toDtoList()
